@@ -94,7 +94,7 @@ namespace Backend.Controllers
                 return NotFound();
             }
 
-            _context.Usuarios.Remove(usuario);
+            _context.Entry(usuario).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -104,27 +104,8 @@ namespace Backend.Controllers
         {
             return _context.Usuarios.Any(e => e.Id == id);
         }
-        // DELETE: api/Usuarios/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUsuarios(int id)
-        {
-            var usuario = await _context.Usuarios.FindAsync(id);
-            if (usuario == null)
-            {
-                return NotFound();
-            }
+       
 
-            usuario.IsDeleted = true; // Soft delete
-            _context.Usuarios.Update(usuario);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool UsuariosExists(int id)
-        {
-            return _context.Usuarios.Any(e => e.Id == id);
-        }
         // DELETE: api/Usuarios/5
         [HttpPut("restore/{id}")]
         public async Task<IActionResult> RestoreUsuarios(int id)

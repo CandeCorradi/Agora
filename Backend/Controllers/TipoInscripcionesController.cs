@@ -104,5 +104,31 @@ namespace Backend.Controllers
         {
             return _context.TipoInscripciones.Any(e => e.Id == id);
         }
+       
+
+        // DELETE: api/TipoInscripciones/5
+        [HttpPut("restore/{id}")]
+        public async Task<IActionResult> RestoreTipoInscripciones(int id)
+        {
+            var tipoInscripciones = await _context.TipoInscripciones
+                                             .IgnoreQueryFilters()
+                                             .FirstOrDefaultAsync(c => c.Id.Equals(id));
+            if (tipoInscripciones == null)
+            {
+                return NotFound();
+            }
+
+            tipoInscripciones.IsDeleted = false; // Restore the soft-deleted record
+            _context.TipoInscripciones.Update(tipoInscripciones);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpGet("deleteds/")]
+        public async Task<ActionResult<IEnumerable<TipoInscripcion>>> GetTipoInscripcionesDeleteds()
+        {
+            return await _context.TipoInscripciones.IgnoreQueryFilters().Where(c => c.IsDeleted).ToListAsync();
+        }
     }
 }
