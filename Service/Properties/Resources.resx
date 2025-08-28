@@ -120,4 +120,7 @@
   <data name="UrlApi" xml:space="preserve">
     <value>https://apiagoracande.azurewebsites.net/api/</value>
   </data>
+  <data name="UrlApiLocal" xml:space="preserve">
+    <value>https://localhost:7000;http://localhost:5255</value>
+  </data>
 </root>

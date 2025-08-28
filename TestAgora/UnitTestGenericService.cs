@@ -92,15 +92,15 @@ public class UnitTestGenericService
 
         }
         [Fact]
-        public async void TestDeleteInscripciones()
+        public async void TestDeleteCapacitaciones()
         {
             //arrange
-            var service = new GenericService<Inscripcion>();
+            var service = new GenericService<Capacitacion>();
             //act
-            var idToDelete = 5;
+            var idToDelete = 3;
             var result = await service.DeleteAsync(idToDelete);
             Assert.True(result);
-            Console.WriteLine($"Inscripcion con Id: {idToDelete} eliminado correctamente");
+            Console.WriteLine($"Capacitacion con Id: {idToDelete} eliminado correctamente");
 
 
         }

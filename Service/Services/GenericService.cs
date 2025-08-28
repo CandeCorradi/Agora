@@ -20,6 +20,7 @@ namespace Service.Services
             _httpClient = new HttpClient();
             _options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
             _endpoint = Properties.Resources.UrlApi+ApiEndpoints.GetEndpoint(typeof(T).Name);
+            //_endpoint = Properties.Resources.UrlApiLocal + ApiEndpoints.GetEndpoint(typeof(T).Name);
         }
         public async Task<T?> AddAsync(T? entity)
         {
@@ -54,13 +55,14 @@ namespace Service.Services
         }
         public async Task<bool> UpdateAsync(T? entity)
         {
-            var response = await _httpClient.PutAsJsonAsync(_endpoint, entity);
+            var id = (int)entity.GetType().GetProperty("Id").GetValue(entity);
+            var response = await _httpClient.PutAsJsonAsync($"{_endpoint}/{id}", entity);
             var content = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception($"Error al actualizar el dato: {response.StatusCode} - {content}");
             }
-            return JsonSerializer.Deserialize<bool>(content, _options);
+            return response.IsSuccessStatusCode;
         }
 
         public async Task<List<T>?> GetAllDeletedsAsync(string? filtro)
