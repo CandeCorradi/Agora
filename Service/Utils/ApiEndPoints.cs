@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.Services.Utils
+namespace Service.Utils
 {
 
         public static class ApiEndpoints
@@ -12,8 +12,8 @@ namespace Service.Services.Utils
             public static string Capacitacion { get; set; } = "capacitaciones";
             public static string Usuario { get; set; } = "usuarios";
             public static string Inscripcion { get; set; } = "inscripciones";
-            public static string TipoInscripcion { get; set; } = "tipos inscripciones";
-            public static string TipoInscripcionCapacitacion { get; set; } = "tipos inscripciones capacitaciones";
+            public static string TipoInscripcion { get; set; } = "tiposinscripciones";
+            public static string TipoInscripcionCapacitacion { get; set; } = "tiposinscripcionescapacitaciones";
            
             public static string GetEndpoint(string name)
             {
