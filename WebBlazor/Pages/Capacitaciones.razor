@@ -1,8 +1,47 @@
 ﻿@page "/capacitaciones"
+@using Service.Interfaces
+@using Service.Models
+@inject IGenericService<Capacitacion> _serviceCapacitacion
 
 <PageTitle>Capacitaciones</PageTitle>
 
 <h1>Capacitaciones</h1>
 
-<h4></h4>
+@if(capacitaciones == null)
+{
+    <p><em>Cargando la lista de capacitaciones...</em></p>
+}
+else if(!capacitaciones.Any())
+{
+<p><em>No hay capacitaciones disponibles.</em></p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Orador/a</th>
+                <th>Fecha</th>
+            </tr>
+        </thead>
+    <tbody>
+        @foreach (var capacitacion in capacitaciones)
+        {
+            <tr>
+                <td>@capacitacion.Nombre</td>
+                <td>@capacitacion.Ponente</td>
+                <td>@capacitacion.FechaHora</td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
 
+@code {
+    private List<Capacitacion>? capacitaciones;
+    protected override async Task OnInitializedAsync()
+    {
+        capacitaciones = (await _serviceCapacitacion.GetAllAsync(null))?.ToList();
+    }
+}
